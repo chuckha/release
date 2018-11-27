@@ -9,7 +9,7 @@ steps:
 - name: gcr.io/cloud-builders/git
   args:
   - "clone"
-  - "https://github.com/kubernetes/release"
+  - "https://github.com/chuckha/release"
 
 - name: gcr.io/$PROJECT_ID/k8s-cloud-builder
   dir: release

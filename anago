@@ -281,7 +281,7 @@ ensure_registry_acls () {
   for r in ${registries[*]//_/-}; do
     # In this context, "google-containers" is still used
     if [[ "$r" == "$GCRIO_PATH_PROD" ]]; then
-      artifact_namespace="google-containers"
+      artifact_namespace="chuck-heptio"
     else
       artifact_namespace="${r/gcr.io\//}"
     fi
