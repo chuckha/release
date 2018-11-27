@@ -25,6 +25,7 @@ GITHUB_TOKEN=${FLAGS_github_token:-$GITHUB_TOKEN}
 GHCURL="curl -s --fail --retry 10 ${GITHUB_TOKEN_FLAG[*]}"
 K8S_GITHUB_API_ROOT='https://api.github.com/repos'
 K8S_GITHUB_API="$K8S_GITHUB_API_ROOT/chuckha/kubernetes"
+K8S_GITHUB_RAW_ORG='https://raw.githubusercontent.com/kubernetes'
 
 K8S_GITHUB_SEARCHAPI_ROOT='https://api.github.com/search/issues?per_page=100'
 K8S_GITHUB_URL='https://github.com/chuckha/kubernetes'
