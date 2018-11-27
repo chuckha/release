@@ -31,7 +31,7 @@ steps:
   - "--tmpdir=/workspace/tmp"
   - "--gcrio_path=gcr.io/chuck-heptio"
 
-- name: k8s.gcr.io/kube-cross:local
+- name: gcr.io/$PROJECT_ID/kube-cross:local
   dir: release
   args:
   - "./anago"
