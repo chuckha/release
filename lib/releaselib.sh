@@ -145,7 +145,7 @@ release::set_build_version () {
     [[ -n $exclude_patterns && ${all_jobs[$i]} =~ $exclude_patterns ]] \
         || secondary_jobs+=(${all_jobs[$i]})
   done
-  
+
   # Update main cache
   # We dedup the $main_job's list of successful runs and just run through that
   # unique list. We then leave the full state of secondaries below so we have
@@ -234,7 +234,7 @@ release::set_build_version () {
     # we make code changes on the HEAD of the branch (version.go).
     # Verify if discovered build_version's SHA1 hash == HEAD if branch
     # Due to resetting $branch above based on branch==master to workaround
-    # inconsistencies in the testgrid config naming conventions, now look 
+    # inconsistencies in the testgrid config naming conventions, now look
     # *specifically* for a release branch with a version in it (non-master).
     if [[ "$branch" =~ release-([0-9]{1,})\. ]]; then
       if [[ $build_sha1 != $branch_head ]]; then
@@ -531,11 +531,11 @@ release::gcs::destination_empty() {
   if $GSUTIL ls $gcs_destination >/dev/null 2>&1 ; then
     logecho "- Destination exists. To remove, run:"
     logecho "  gsutil -m rm -r $gcs_destination"
-    
+
     if ((FLAGS_allow_dup)) ; then
-      logecho "flag --allow-dup set, continue with overwriting"   
+      logecho "flag --allow-dup set, continue with overwriting"
     else
-      logecho "$FAILED"  
+      logecho "$FAILED"
       return 1
     fi
   fi
@@ -1094,7 +1094,7 @@ release::send_announcement () {
 # RELEASE_BUCKET - mock or standard release bucket location
 # BUCKET_TYPE - stage or release
 # WRITE_RELEASE_BUCKETS - array of writable buckets
-# READ_RELEASE_BUCKETS - array of readable buckets for multiple sourcing of 
+# READ_RELEASE_BUCKETS - array of readable buckets for multiple sourcing of
 #                        mock staged builds
 # GCRIO_PATH - GCR path based on mock or --nomock
 # ALL_CONTAINER_REGISTRIES - when running mock (via GCB) this array also
@@ -1102,7 +1102,7 @@ release::send_announcement () {
 #                            mode before an actual release occurs
 release::set_globals () {
   # Define the placeholder/"role" user for GCB
-  local gcb_user="gcb@google.com"
+  local gcb_user="chuck@heptio.com"
 
   logecho -n "Setting global variables: "
 
@@ -1110,7 +1110,6 @@ release::set_globals () {
   RELEASE_GB="75"
 
   if ((FLAGS_gcb)); then
-    # a placeholder that satisfies @google.com conditional below
     GCP_USER="$gcb_user"
   else
     # Nothing should work without this.  The entire release workflow depends
@@ -1137,10 +1136,10 @@ release::set_globals () {
   fi
 
   # The "production" GCR path is now multi-region alias
-  GCRIO_PATH_PROD="k8s.gcr.io"
-  GCRIO_PATH_PROD_PUSH="gcr.io/google-containers"
+  GCRIO_PATH_PROD="gcr.io/chuck-heptio"
+  GCRIO_PATH_PROD_PUSH="gcr.io/chuck-heptio"
   # The "test" GCR path
-  GCRIO_PATH_TEST="gcr.io/kubernetes-release-test"
+  GCRIO_PATH_TEST="gcr.io/chuck-heptio"
 
   if ((FLAGS_nomock)); then
     GCRIO_PATH="${FLAGS_gcrio_path:-$GCRIO_PATH_PROD}"

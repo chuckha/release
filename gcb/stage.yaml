@@ -1,9 +1,9 @@
 timeout: 14400s
 
-secrets:
-- kmsKeyName: projects/kubernetes-release-test/locations/global/keyRings/anago/cryptoKeys/k8s-release-robot
-  secretEnv:
-    GITHUB_TOKEN: CiQAveh8wNQ8K6kNjjzphTw7xNic+UDuVTZaCytECCK/+C20onASUQCMoh/Is7ghO1EuBKOptX/RoFhYKcDc67jnpbmz7FGKHOZiCi1ihHPq1e4uktTWH/ZAoYIYUWokd2NPH3KtlrrPhkcdOOFz+UMe6/ITKeb9Kg==
+# secrets:
+# - kmsKeyName: projects/kubernetes-release-test/locations/global/keyRings/anago/cryptoKeys/k8s-release-robot
+#   secretEnv:
+#     GITHUB_TOKEN: CiQAveh8wNQ8K6kNjjzphTw7xNic+UDuVTZaCytECCK/+C20onASUQCMoh/Is7ghO1EuBKOptX/RoFhYKcDc67jnpbmz7FGKHOZiCi1ihHPq1e4uktTWH/ZAoYIYUWokd2NPH3KtlrrPhkcdOOFz+UMe6/ITKeb9Kg==
 
 steps:
 - name: gcr.io/cloud-builders/git
@@ -13,8 +13,8 @@ steps:
 
 - name: gcr.io/$PROJECT_ID/k8s-cloud-builder
   dir: release
-  secretEnv:
-  - GITHUB_TOKEN
+#   secretEnv:
+#   - GITHUB_TOKEN
   args:
   - "./anago"
   - "${_RELEASE_BRANCH}"
@@ -29,6 +29,7 @@ steps:
   - "--gcb"
   - "--basedir=/workspace"
   - "--tmpdir=/workspace/tmp"
+  - "--gcrio_path=gcr.io/chuck-heptio"
 
 - name: k8s.gcr.io/kube-cross:local
   dir: release
@@ -46,11 +47,12 @@ steps:
   - "--gcb"
   - "--basedir=/workspace"
   - "--tmpdir=/workspace/tmp"
+  - "--gcrio_path=gcr.io/chuck-heptio"
 
 - name: gcr.io/$PROJECT_ID/k8s-cloud-builder
   dir: release
-  secretEnv:
-  - GITHUB_TOKEN
+#   secretEnv:
+#   - GITHUB_TOKEN
   args:
   - "./anago"
   - "${_RELEASE_BRANCH}"
@@ -64,6 +66,7 @@ steps:
   - "--gcb"
   - "--basedir=/workspace"
   - "--tmpdir=/workspace/tmp"
+  - "--gcrio_path=gcr.io/chuck-heptio"
 
 tags:
 - ${_GCP_USER_TAG}

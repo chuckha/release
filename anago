@@ -68,7 +68,7 @@ PROG=${0##*/}
 #+     * This method works with both mock and --nomock INTERCHANGEABLY
 #+       on the local disk. If relying on the GCS staging, be sure to use
 #+       --nomock for both --stage and the real release run.
-#+     * --stage also skips many of the usual release steps including many 
+#+     * --stage also skips many of the usual release steps including many
 #+       auth checks and pushes as it's primary function is to build and
 #+       stage release bits and artifacts for later use.
 #+
@@ -274,6 +274,8 @@ ensure_registry_acls () {
   # Make an empty file to test uploading
   logrun touch $emptyfile
 
+  logecho -n "all registries: $registries"
+
   # Short of creating a hardcoded map of project-id to registry, translating
   # _ to - seems to be a simple rule to keep this, well, simple.
   for r in ${registries[*]//_/-}; do
@@ -285,7 +287,7 @@ ensure_registry_acls () {
     fi
 
     gs_path="gs://artifacts.$artifact_namespace.appspot.com/containers"
-    logecho -n "Checking write access to registry $r: "
+    logecho -n "Checking write access to registry $r ($artifact_namespace): "
     if logrun $GSUTIL -q cp $emptyfile $gs_path && \
        logrun $GSUTIL -q rm $gs_path/${emptyfile##*/}; then
       logecho $OK

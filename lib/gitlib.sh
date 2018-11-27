@@ -23,14 +23,11 @@
 GITHUB_TOKEN=${FLAGS_github_token:-$GITHUB_TOKEN}
 [[ -n $GITHUB_TOKEN ]] && GITHUB_TOKEN_FLAG=("-u" "$GITHUB_TOKEN:x-oauth-basic")
 GHCURL="curl -s --fail --retry 10 ${GITHUB_TOKEN_FLAG[*]}"
-JCURL="curl -g -s --fail --retry 10"
 K8S_GITHUB_API_ROOT='https://api.github.com/repos'
-K8S_GITHUB_API="$K8S_GITHUB_API_ROOT/kubernetes/kubernetes"
-K8S_GITHUB_RAW_ORG='https://raw.githubusercontent.com/kubernetes'
+K8S_GITHUB_API="$K8S_GITHUB_API_ROOT/chuckha/kubernetes"
 
 K8S_GITHUB_SEARCHAPI_ROOT='https://api.github.com/search/issues?per_page=100'
-K8S_GITHUB_SEARCHAPI="$K8S_GITHUB_SEARCHAPI_ROOT&q=is:pr%20repo:kubernetes/kubernetes%20"
-K8S_GITHUB_URL='https://github.com/kubernetes/kubernetes'
+K8S_GITHUB_URL='https://github.com/chuckha/kubernetes'
 if ((FLAGS_gcb)); then
   K8S_GITHUB_AUTH_ROOT="https://git@github.com/"
 else
@@ -45,7 +42,6 @@ K8S_GITHUB_AUTH_URL="${K8S_GITHUB_AUTH_ROOT}kubernetes/kubernetes.git"
 # 2=Minor
 # 3=.Patch
 # 4=Patch
-BRANCH_REGEX="master|release-([0-9]{1,})\.([0-9]{1,})(\.([0-9]{1,}))*$"
 # release - 1=Major, 2=Minor, 3=Patch, 4=-(alpha|beta|rc), 5=rev
 # dotzero - 1=Major, 2=Minor
 # build - 1=build number, 2=sha1
@@ -281,7 +277,7 @@ gitlib::push_master () {
 
 ##############################################################################
 # Ensure TOOL_ROOT running with a synced repo.
-# 
+#
 gitlib::repo_state () {
   local branch=$(gitlib::current_branch $TOOL_ROOT) || return 1
   local remote=$(git -C $TOOL_ROOT remote -v |\
